@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { routes as r } from './routes/'
 import createReduxStore from './store';
-import reducers from './store/reducers';
+import reducers from './store/createReducer';
 import epics from './store/epics';
 import IntegrationsList from './views/Integration/List';
 import Jira from './views/Integration/Jira/Configuration';

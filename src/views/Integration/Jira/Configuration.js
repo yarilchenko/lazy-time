@@ -95,9 +95,9 @@ export default compose(
         onTryIt: checkCredentials
     }),
     connect(
-        ({ jira, rescuetime }) => ({
+        ({ jira, sources }) => ({
             successTested: jira.successTested,
-            rescuetime: rescuetime.token
+            rescuetime: sources.rescuetime.token
         })
     )
 )(JiraConfiguration)

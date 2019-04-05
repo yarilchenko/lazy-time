@@ -1,0 +1,58 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "main": "public/electron.js",
+  "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "classnames": "^2.2.6",
+    "es6-url-template": "^1.0.3",
+    "history": "^4.7.2",
+    "jss": "^9.8.7",
+    "lodash-es": "^4.17.11",
+    "node-sass": "^4.9.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.0",
+    "react-alert": "^5.4.0",
+    "react-cookie": "^3.1.1",
+    "react-cookies": "^0.1.0",
+    "react-dom": "^16.8.0",
+    "react-flexbox-grid": "^2.1.2",
+    "react-jss": "^8.6.1",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "4",
+    "react-scripts": "^2.0.0",
+    "redux": "^4.0.0",
+    "redux-form": "^8.1.0",
+    "redux-observable": "^1.1.0",
+    "redux-thunk": "^2.3.0",
+    "rxjs": "^6.4.0",
+    "rxjs-compat": "^6.4.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "cross-env": "^5.2.0",
+    "electromon": "^1.0.10",
+    "electron": "^3.0.2",
+    "electron-builder": "^20.39.0",
+    "electron-devtools-installer": "^2.2.4",
+    "electron-is-dev": "^1.0.1",
+    "foreman": "^3.0.1",
+    "version-bump-prompt": "^5.0.0",
+    "wait-on": "^3.2.0"
+  },
+  "scripts": {
+    "start": "concurrently \"cross-env BROWSER=none yarn react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

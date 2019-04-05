@@ -1,0 +1,14 @@
+.root:after {
+  content: '';
+  padding-top: 100%;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &Image {
+    width: 80%;
+    height: auto;
+  }
+}

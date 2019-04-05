@@ -1,0 +1,42 @@
+.root {
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding: 20px 10px;
+  &.info {
+    background-color: lighten(#4780b6, 10%);
+  }
+  &.warning {
+    background-color: lighten(#fbbf4e, 10%);
+  }
+  &.error {
+    background-color: lighten(#ff5656, 5%);
+  }
+  &.success {
+    background-color: lighten(#8cc269, 5%);
+  }
+}
+
+.message {
+  box-sizing: border-box;
+  color: #fff;
+  margin: auto;
+  max-width: 1024px;
+  min-width: 360px;
+  text-align: center;
+  font-size: 1.5px;
+  a {
+    color: #fff;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+      color: #fff;
+    }
+  }
+}
+
+.closeButton {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}

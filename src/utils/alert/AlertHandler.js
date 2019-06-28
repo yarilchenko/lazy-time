@@ -19,6 +19,7 @@ class AlertHandler extends React.Component {
                 alert.success(message.text);
                 break;
             case 'info':
+            default:
                 alert.info(message.text);
                 break;
         }

@@ -4,27 +4,27 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Button from '@material-ui/core/Button';
 import { reduxForm } from 'redux-form';
-import logo from 'assets/images/jira-logo.png';
-import { TextInput } from 'components/fields';
-import styles from '../Configuration.module.scss';
-import { jira, common } from 'store/actions';
+import { TextInput } from 'components/fields/index';
+import styles from './Configuration.module.scss';
+import { actions } from 'store';
 import { required, isUrl } from 'utils/validations';
+import * as configurations from 'config';
 
-const JiraConfiguration = ({submitting, handleSubmit, onSubmit, onTryIt, successTested}) => (
+const Credentials = ({ resource, submitting, handleSubmit, onSubmit, onTryIt, successfully }) => (
     <Grid fluid={true}>
         <Row middle={'xs'} center={'xs'}>
             <Col xs={6} xlOffset={3}>
-                <Row>
-                    <Col xs={8} xsOffset={2}>
-                        <img src={logo} alt='JIRA server integration' className={styles.logo}/>
+                <Row center='xs'>
+                    <Col xs={8}>
+                        <img src={resource.logo} alt={resource.description} className={styles.logo}/>
                     </Col>
                 </Row>
                 <Row>
-                    <form name='jira' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+                    <form name={resource.title} className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                         <Row>
                             <Col xs={12}>
                                 <TextInput
-                                    label="JIRA base URL"
+                                    label={`${resource.title} base URL`}
                                     type="text"
                                     name="url"
                                     validate={[required, isUrl]}
@@ -66,7 +66,7 @@ const JiraConfiguration = ({submitting, handleSubmit, onSubmit, onTryIt, success
                                 <Button
                                     type='submit'
                                     color='primary'
-                                    disabled={(successTested !== null && !successTested) || submitting}
+                                    disabled={(successfully !== null && !successfully) || submitting}
                                 >
                                     Save
                                 </Button>
@@ -79,25 +79,42 @@ const JiraConfiguration = ({submitting, handleSubmit, onSubmit, onTryIt, success
     </Grid>
 );
 
-const submitForm = (values, dispatch, form) => {
-    dispatch(jira.saveCredentials(values, form));
-    dispatch(common.redirectAfterCredentialSave());
+const submitForm = (values, dispatch, props) => {
+    const { resource } = props,
+        connectedResource = resource.connect(values),
+        resourceName = resource.title.toLowerCase();
+
+    const configuration = {
+        token: connectedResource.createToken(),
+        headers: connectedResource.headers(),
+        url: connectedResource.url()
+    };
+
+    console.log(configuration);
+
+    dispatch(actions[props.resourceType].saveCredentials({
+        resource: resourceName,
+        configuration: {
+            token: btoa(`${values.login}:${values.password}`)
+        }
+    }));
+
+    dispatch(actions.common.redirectAfterCredentialSave());
 };
 
 const checkCredentials = (values, dispatch, form) => {
-    dispatch(jira.checkCredentials(values, form));
+    dispatch(actions[form.resourceType].checkCredentials(values, form));
 };
 
 export default compose(
     reduxForm({
-        form: 'JiraForm',
+        form: 'CredentialsForm',
         onSubmit: submitForm,
         onTryIt: checkCredentials
     }),
     connect(
-        ({ jira, sources }) => ({
-            successTested: jira.successTested,
-            rescuetime: sources.rescuetime.token
+        ({ trackers }) => ({
+            successfully: trackers.successfully
         })
     )
-)(JiraConfiguration)
+)(Credentials)

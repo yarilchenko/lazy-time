@@ -1,8 +1,10 @@
 import { combineEpics } from 'redux-observable';
-import * as integration from './integrationService';
+import * as tracker from './trackerService';
+import * as common from './commonServices';
 import api from 'utils/api';
 
 export default combineEpics(
-    ...Object.values(integration),
+    ...Object.values(tracker),
+    ...Object.values(common),
     ...api
 );

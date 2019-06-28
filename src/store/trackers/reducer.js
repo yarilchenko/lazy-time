@@ -1,9 +1,29 @@
 import * as actions from './actions';
 
-export default function sourcesReducer(state = {}, action) {
+const defaultTrackersState = {
+    successfully: null
+};
+
+export default function sourcesReducer(state = defaultTrackersState, action) {
     const { type } = action;
-    switch(type) {
-        // TODO: create action cases
+    switch (type) {
+        case actions.SAVE_CONFIGURATION:
+            const { payload: { name, configuration } } = action;
+            return {
+                ...state,
+                ...defaultTrackersState,
+                [name]: configuration
+            };
+        case actions.CHECK_CREDENTIALS_ERROR:
+            return {
+                ...state,
+                successfully: false
+            };
+        case actions.CHECK_CREDENTIALS_SUCCESS:
+            return {
+                ...state,
+                successfully: true
+            };
         default:
             return state;
     }

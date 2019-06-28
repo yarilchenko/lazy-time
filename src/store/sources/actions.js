@@ -1,6 +1,9 @@
-export const NAMESPACE = '@SOURCES',
-    SAVE_SOURCE = `${NAMESPACE}/SAVE_TOKEN`,
-    saveSource = source => ({ 
-        type: SAVE_SOURCE,
-        payload: source,
+export const NAMESPACE = '@SOURCE',
+    SAVE_CONFIGURATION = `${NAMESPACE}/SAVE_CONFIGURATION`,
+    saveSource = ({source, configuration}) => ({
+        type: SAVE_CONFIGURATION,
+        payload: {
+            name: source,
+            configuration
+        },
     });

@@ -13,7 +13,7 @@ export default () => (
             <Typography variant="h6" color="inherit" style={{flexGrow: 1}}>
                 Time tracker
             </Typography>
-            <Link to={r.integration.path}>
+            <Link to={r.integration.list}>
                 <IconButton>
                     <IconBuild
                         color='inherit'

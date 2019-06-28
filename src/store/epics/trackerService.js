@@ -1,13 +1,13 @@
-import * as jira from '../actions/jira';
-import { of } from 'rxjs/observable/of';
-import { apiRequest, REQUEST_SUCCESS, REQUEST_ERROR } from 'utils/api';
+import * as action from 'store/trackers/actions';
+import URI from 'routes/uris';
+import { of } from 'rxjs';
+import { apiRequest, REQUEST_ERROR, REQUEST_SUCCESS } from 'utils/api';
 import { epicErrorHandler } from 'utils/error-handler';
 import { actions as alert } from 'utils/alert';
-import URI from 'routes/uris';
 
 export const checkTrackerCredentials = ($action) =>
     $action
-        .ofType(jira.CHECK_CREDENTIALS)
+        .ofType(action.CHECK_CREDENTIALS)
         .switchMap(({ payload }) => {
             const { values, form } = payload;
             form.startSubmit();
@@ -37,12 +37,12 @@ export const trackerResponseCheck = ($action) =>
             if (payload.hasOwnProperty('status') && status !== 200) {
                 actions.push(
                     alert.error('Oops! Something went wrong, maybe credentials are incorrect'),
-                    { type: jira.CHECK_CREDENTIALS_ERROR }
+                    { type: action.CHECK_CREDENTIALS_ERROR }
                 );
             } else {
                 actions.push(
                     alert.success('Woohoo! It seems like a correct credentials!'),
-                    { type: jira.CHECK_CREDENTIALS_SUCCESS }
+                    { type: action.CHECK_CREDENTIALS_SUCCESS }
                 );
             }
 

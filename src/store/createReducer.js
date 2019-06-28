@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
-import user from './reducers/user'; //move to user folder
+import { connectRouter } from 'connected-react-router';
 import { reducers as alert } from 'utils/alert';
-import sourcesReducer from './sources/reducer';
-import trackersReducer from './trackers/reducer';
+import sources from './sources/reducer';
+import trackers from './trackers/reducer';
 
-export default combineReducers({
-    sources: sourcesReducer,
-    trackers: trackersReducer,
-    user,
+export default (history) => combineReducers({
+    sources,
+    trackers,
+    router: connectRouter(history),
     form,
     ...alert
 });

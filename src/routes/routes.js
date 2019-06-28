@@ -1,17 +1,14 @@
 const integration = '/integration';
+const configuration = '/:type(tracker|source)/:title';
 const tracker = '/tracker';
 const routes = {
     integration: {
-        path: `${integration}/list`,
-        jira: {
-            path: `${integration}/jira`
-        },
-        redmine: {
-            path: `${integration}/redmine`
-        }
+        list: `${integration}/list`
     },
-    tracker: {
-        path: tracker
-    }
+    configuration: {
+        list: configuration,
+        method: `${configuration}/:method`
+    },
+    dashboard: tracker
 };
 export default routes;

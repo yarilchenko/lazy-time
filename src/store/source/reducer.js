@@ -1,15 +1,14 @@
 import * as actions from './actions';
 
 export default function sourcesReducer(state = {}, action) {
-    const { type } = action;
-    switch(type) {
+    const { type, payload } = action;
+    switch (type) {
         case actions.SAVE_CONFIGURATION:
-            const { payload: { name, configuration } } = action;
+            const { code, ...configuration } = payload;
+
             return {
                 ...state,
-                [name]: {
-                    ...configuration,
-                },
+                [code]: configuration,
             };
         default:
             return state;

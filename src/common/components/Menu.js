@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import IconBuild from '@material-ui/icons/Build';
-import { routes as r } from 'routes';
+import { routes as r } from 'routes/index';
 
 export default () => (
     <AppBar color='primary' position='relative'>

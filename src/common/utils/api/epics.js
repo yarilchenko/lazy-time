@@ -7,7 +7,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import * as a from './actions';
-import { epicErrorHandler } from 'utils/error-handler';
+import { epicErrorHandler } from 'common/utils/error-handler/index';
 import isEmpty from 'lodash-es/isEmpty';
 import { buildQueryParams } from './helper';
 
@@ -24,6 +24,8 @@ const ajaxCall = ({ uuid, payload }) => {
         },
         url: `${meta.url}${query}`
     };
+
+    console.log(settings);
 
     if (payload.body) {
         settings.body = JSON.stringify(payload.body);

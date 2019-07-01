@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import Typography from '@material-ui/core/Typography';
-/**
- * GET Object tracker & sources
- */
-import trackers from 'config/trackers';
+import {
+    tracker as trackers,
+    source as sources
+} from 'common/core';
 import Item from './Item';
 import styles from './List.module.scss';
 
@@ -21,7 +21,25 @@ export default (props) => {
                     </Row>
                     <Row around='xs'>
                         {trackers.map((tracker) => (
-                            <Item key={tracker.title} resource={tracker} type='tracker' />
+                            <Item
+                                key={tracker.title}
+                                resource={tracker}
+                                type='tracker'
+                            />
+                        ))}
+                    </Row>
+                    <Row>
+                        <Col xs={12}>
+                            <Typography variant='h4' align='center'>Sources</Typography>
+                        </Col>
+                    </Row>
+                    <Row around='xs'>
+                        {sources.map((source) => (
+                            <Item
+                                key={source.title}
+                                resource={source}
+                                type='source'
+                            />
                         ))}
                     </Row>
                 </Col>

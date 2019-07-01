@@ -2,37 +2,46 @@ import * as actions from '../common/actions';
 import { of } from 'rxjs/observable/of';
 import { push } from 'connected-react-router';
 import { routes } from 'routes';
-import { epicErrorHandler } from 'utils/error-handler';
+import { epicErrorHandler } from 'common/utils/error-handler';
+import pathToRegexp from 'path-to-regexp';
 
-export const redirectAfterCredentialsSave = (action$, state$) =>
+export const redirectAfterConfigurationSave = (action$, state$) =>
     action$
         .ofType(actions.REDIRECT_AFTER_SAVE)
         .switchMap(() => {
-            const { trackers, sources } = state$.getState();
+            console.log(state$);
+            const { trackers, sources } = state$.value;
 
-            console.log(trackers, sources);
-            // window.location = '';
+            const trackersCount = Object.keys(trackers).length,
+                sourcesCount = Object.keys(sources).length,
+                path = trackersCount && sourcesCount
+                    ? routes.dashboard
+                    : routes.integration.list;
+
+            return of(push(path));
         })
         .catch(epicErrorHandler);
 
 export const redirectToResource = (action$) =>
     action$
         .ofType(actions.REDIRECT_TO_RESOURCE)
-        .switchMap(({payload: resource}) => {
-            const {type, methods, title} = resource,
+        .switchMap(({ payload: resource }) => {
+            const { type, methods, code } = resource,
                 methodsCount = methods.length;
-            let distRoute;
+            let route = methodsCount && methodsCount > 1
+                ? routes.configuration.list
+                : routes.configuration.method;
 
-            if(!methodsCount) {
-                distRoute = routes.integration.list;
-            } else {
-                distRoute = `/${type}/${title}`;
+            const url = pathToRegexp.compile(route);
 
-                if(methodsCount === 1) {
-                    const method = methods[0];
-                    distRoute = `${distRoute}/${method.code}`;
-                }
-            }
-
-            return of(push(distRoute));
-        });
+            return of(
+                push(
+                    url({
+                        code,
+                        type,
+                        method: methodsCount ? methods[0].code : null
+                    })
+                )
+            );
+        })
+        .catch(epicErrorHandler);

@@ -6,7 +6,7 @@ export const namespace = '@APP',
     REDIRECT_AFTER_SAVE = `${namespace}/REDIRECT_AFTER_SAVE`,
     REDIRECT_TO_RESOURCE = `${namespace}/REDIRECT_TO_RESOURCE`;
 
-export const redirectAfterCredentialSave = () => ({
+export const redirectAfterConfigurationSave = () => ({
     type: REDIRECT_AFTER_SAVE
 });
 

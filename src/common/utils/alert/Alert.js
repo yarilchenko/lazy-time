@@ -1,7 +1,7 @@
 import React from 'react';
 import { positions, Provider } from 'react-alert';
 import AlertHandler from './AlertHandler';
-import AlertTemplate from 'components/Alert';
+import AlertTemplate from 'common/components/Alert/index';
 
 const options = {
     offset: '0',

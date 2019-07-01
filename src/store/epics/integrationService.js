@@ -1,8 +1,7 @@
-import * as jira from '../actions/jira';
 import { of } from 'rxjs/observable/of';
-import { apiRequest, REQUEST_SUCCESS, REQUEST_ERROR } from 'utils/api';
-import { epicErrorHandler } from 'utils/error-handler';
-import { actions as alert } from 'utils/alert';
+import { apiRequest, REQUEST_SUCCESS, REQUEST_ERROR } from 'common/utils/api';
+import { epicErrorHandler } from 'common/utils/error-handler';
+import { actions as alert } from 'common/utils/alert';
 import URI from 'routes/uris';
 
 export const checkTrackerCredentials = ($action) =>

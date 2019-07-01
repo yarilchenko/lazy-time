@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import { Row, Col } from 'react-flexbox-grid';
-import trackers from 'config/trackers';
-import styles from './Form/Configuration.module.scss';
+import trackers from 'common/core/trackers';
+import styles from 'views/Configuration/Basic.module.scss';
 
 const MethodsList = ({ methods }) => (
     methods.map(({ icon: Icon, ...method }) => (
         <Row key={method.code} center='xs'>
             <Col xs={12} sm={6}>
                 <Button color='primary' fullWidth={true}>
-                    <Icon/>
+                    <Icon />
                     {method.title}
                 </Button>
             </Col>
@@ -18,14 +18,18 @@ const MethodsList = ({ methods }) => (
 );
 
 export default ({ match: { params } }) => {
-    const resource = trackers.find((tracker) => tracker.title === params.title),
+    const resource = trackers.find((tracker) => tracker.code === params.code),
         { methods } = resource;
 
     return (
         <Fragment>
             <Row center='xs'>
                 <Col xs={8}>
-                    <img src={resource.logo} alt={resource.description} className={styles.logo}/>
+                    <img
+                        src={resource.logo}
+                        className={styles.logo}
+                        alt={resource.description}
+                    />
                 </Col>
             </Row>
             <Row>

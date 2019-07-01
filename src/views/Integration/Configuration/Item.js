@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import trackers from 'config/trackers';
+import trackers from 'common/core/trackers';
 
 const ConfigurationItem = ({ match: { params } }) => {
     const resource = trackers.find((resource) => resource.title === params.title),

@@ -16,7 +16,6 @@
     "es6-url-template": "^1.0.3",
     "history": "^4.7.2",
     "jss": "^9.8.7",
-    "lodash": "4.17.13",
     "lodash-es": "^4.17.15",
     "moment": "^2.24.0",
     "node-sass": "^4.9.3",

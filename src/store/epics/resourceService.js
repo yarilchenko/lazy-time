@@ -6,38 +6,62 @@ import {
     REQUEST_ERROR
 } from 'common/utils/api';
 import { epicErrorHandler } from 'common/utils/error-handler';
+import { startSubmit, stopSubmit } from 'redux-form';
 
 export const saveResource = (action$) =>
     action$
-        .ofType(actions.resource.SAVE_RESOURCE_CONFIGURATION)
+        .ofType(actions.resource.SAVE_CONFIGURATION)
         .switchMap(({ payload }) => {
-            const { type, ...resource } = payload;
+            const { resource: { type, ...resource }, settings } = payload;
+
+            const configuration = {
+                ...settings,
+                code: resource.code
+            };
+
             return of(
-                actions[type].saveConfiguration(resource),
+                actions[type].saveConfiguration(configuration),
                 actions.resource.resetTestState(),
                 actions.common.redirectAfterConfigurationSave()
             )
         })
         .catch(epicErrorHandler);
 
+const TEST_RESOURCE_ID = 'test-resource-configuration';
+
 export const testResource = (action$) =>
     action$
-        .ofType(actions.resource.TEST_RESOURCE_CONFIGURATION)
+        .ofType(actions.resource.TEST_CONFIGURATION)
         .switchMap(({ payload }) => {
-            const { url, testURI, headers = {}, queries = {} } = payload;
+            console.log(payload);
+            const {
+                resource: {
+                    testURI
+                },
+                settings: {
+                    url,
+                    headers,
+                    params
+                },
+                form
+            } = payload;
 
-            console.log(headers, queries);
+            console.log(url, headers, params);
 
             return of(
                 apiRequest(
-                    'test-resource-configuration',
+                    {
+                        id: TEST_RESOURCE_ID,
+                        form
+                    },
                     {
                         url: `${url}${testURI}`,
                         method: 'GET',
                         headers
                     },
-                    queries
-                )
+                    params
+                ),
+                startSubmit(form)
             )
         })
         .catch(epicErrorHandler);
@@ -45,19 +69,23 @@ export const testResource = (action$) =>
 export const testResourceSuccess = (action$) =>
     action$
         .ofType(REQUEST_SUCCESS)
-        .switchMap(() =>
-            of({
-                type: actions.resource.TEST_RESOURCE_SUCCESS
-            })
+        .filter((action) => action.uuid.id === TEST_RESOURCE_ID)
+        .switchMap(({ uuid }) =>
+            of(
+                { type: actions.resource.TEST_SUCCESS },
+                stopSubmit(uuid.form)
+            )
         )
         .catch(epicErrorHandler);
 
 export const testResourceFailed = (action$) =>
     action$
         .ofType(REQUEST_ERROR)
-        .switchMap(() =>
-            of({
-                type: actions.resource.TEST_RESOURCE_FAILED
-            })
+        .filter((action) => action.uuid.id === TEST_RESOURCE_ID)
+        .switchMap(({ uuid }) =>
+            of(
+                { type: actions.resource.TEST_FAILED },
+                stopSubmit(uuid.form)
+            )
         )
         .catch(epicErrorHandler);

@@ -16,31 +16,39 @@ export default (props) => {
                 <Col xs={12}>
                     <Row>
                         <Col xs={12}>
-                            <Typography variant='h4' align='center'>Trackers</Typography>
+                            <Row>
+                                <Col xs={12}>
+                                    <Typography variant='h4' align='center'>Trackers</Typography>
+                                </Col>
+                            </Row>
+                            <Row around='xs'>
+                                {trackers.map((tracker) => (
+                                    <Item
+                                        key={tracker.title}
+                                        resource={tracker}
+                                        type='tracker'
+                                    />
+                                ))}
+                            </Row>
                         </Col>
-                    </Row>
-                    <Row around='xs'>
-                        {trackers.map((tracker) => (
-                            <Item
-                                key={tracker.title}
-                                resource={tracker}
-                                type='tracker'
-                            />
-                        ))}
                     </Row>
                     <Row>
                         <Col xs={12}>
-                            <Typography variant='h4' align='center'>Sources</Typography>
+                            <Row center='xs'>
+                                <Col xs={12}>
+                                    <Typography variant='h4' align='center'>Sources</Typography>
+                                </Col>
+                            </Row>
+                            <Row around='xs'>
+                                {sources.map((source) => (
+                                    <Item
+                                        key={source.title}
+                                        resource={source}
+                                        type='source'
+                                    />
+                                ))}
+                            </Row>
                         </Col>
-                    </Row>
-                    <Row around='xs'>
-                        {sources.map((source) => (
-                            <Item
-                                key={source.title}
-                                resource={source}
-                                type='source'
-                            />
-                        ))}
                     </Row>
                 </Col>
             </Row>

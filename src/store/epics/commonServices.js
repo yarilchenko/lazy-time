@@ -27,8 +27,8 @@ export const redirectToResource = (action$) =>
         .ofType(actions.REDIRECT_TO_RESOURCE)
         .switchMap(({ payload: resource }) => {
             const { type, methods, code } = resource,
-                methodsCount = methods.length;
-            let route = methodsCount && methodsCount > 1
+                multipleMethods = methods && methods.length > 1;
+            let route = multipleMethods
                 ? routes.configuration.list
                 : routes.configuration.method;
 
@@ -39,7 +39,7 @@ export const redirectToResource = (action$) =>
                     url({
                         code,
                         type,
-                        method: methodsCount ? methods[0].code : null
+                        method: !multipleMethods ? methods[0].code : null
                     })
                 )
             );

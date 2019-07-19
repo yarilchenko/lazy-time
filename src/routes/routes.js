@@ -8,6 +8,7 @@ const integration = '/integration',
             list: configuration,
             method: `${configuration}/:method`
         },
+        mapping: '/mapping',
         dashboard: '/dashboard'
     };
 

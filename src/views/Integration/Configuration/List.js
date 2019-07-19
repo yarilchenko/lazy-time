@@ -3,23 +3,42 @@ import Button from '@material-ui/core/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import trackers from 'common/core/trackers';
 import styles from 'views/Configuration/Basic.module.scss';
+import pathToRegexp from 'path-to-regexp';
+import { routes } from 'routes';
 
-const MethodsList = ({ methods }) => (
-    methods.map(({ icon: Icon, ...method }) => (
-        <Row key={method.code} center='xs'>
-            <Col xs={12} sm={6}>
-                <Button color='primary' fullWidth={true}>
-                    <Icon />
-                    {method.title}
-                </Button>
-            </Col>
-        </Row>
-    ))
-);
+const MethodsList = ({ methods, onClick }) => {
+    return (
+        methods.map(({ icon: Icon, title, code }) => (
+            <Row key={code} center='xs'>
+                <Col xs={12} sm={6}>
+                    <Button
+                        color='primary'
+                        fullWidth={true}
+                        onClick={() => onClick(code)}
+                    >
+                        <Icon/>
+                        {title}
+                    </Button>
+                </Col>
+            </Row>
+        ))
+    )
+};
 
-export default ({ match: { params } }) => {
+export default ({ history, match: { params } }) => {
     const resource = trackers.find((tracker) => tracker.code === params.code),
         { methods } = resource;
+
+    const handleOnClick = (method) => {
+        history.push(
+            pathToRegexp
+                .compile(routes.configuration.method)({
+                    type: params.type,
+                    code: resource.code,
+                    method
+                })
+        )
+    };
 
     return (
         <Fragment>
@@ -34,7 +53,12 @@ export default ({ match: { params } }) => {
             </Row>
             <Row>
                 <Col xs={12}>
-                    {methods.length && <MethodsList methods={methods} />}
+                    {methods.length &&
+                    <MethodsList
+                        methods={methods}
+                        onClick={handleOnClick}
+                    />
+                    }
                 </Col>
             </Row>
         </Fragment>

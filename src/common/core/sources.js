@@ -1,8 +1,5 @@
-import { AUTHENTICATION_METHODS } from './authMethods';
+import { ApiKey } from './authMethods';
 import rescueTime from 'assets/images/rescuetime-logo.svg';
-import Authentication from 'common/utils/Authentication';
-
-const { API_KEY } = AUTHENTICATION_METHODS;
 
 export default [
     {
@@ -10,18 +7,27 @@ export default [
         description: 'RescueTime | Find your ideal work-life balance',
         code: 'rescue-time',
         logo: rescueTime,
-        url: 'https://www.rescuetime.com',
+        /**
+         * FIX: adding CORS headers for rescuetime response
+         */
+        url: 'https://cors-anywhere.herokuapp.com/https://www.rescuetime.com',
         testURI: '/anapi/data',
-        methods: [{
-            ...API_KEY,
-            configuration: (key) => ({
-                queries: {
-                    ...Authentication('key').params(key),
-                    format: 'json',
-                    restrict_begin: '2019-06-30',
-                    restrict_end: '2019-06-30'
-                }
-            })
-        }],
+        methods: [
+            ApiKey({
+                headers: {
+                    /**
+                     * FIX: remove preflight request (OPTION)
+                     * because rescuetime, doesn't support it
+                     * and return 404 HTTP error for it
+                     */
+                    'Content-Type': 'text/plain'
+                },
+                params: {
+                    format: 'json'
+                },
+                via: ['params'],
+                key: 'key'
+            }),
+        ],
     }
 ]

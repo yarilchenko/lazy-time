@@ -19,9 +19,9 @@ const ResourceConfiguration = ({ match }) => {
     return (
         <Grid fluid={true}>
             <Row middle={'xs'} center={'xs'}>
-                <Col xs={4}>
+                <Col xs={12} sm={8} md={6}>
                     <Row center='xs'>
-                        <Col xs={8}>
+                        <Col xs={6} sm={5} md={5} lg={4}>
                             <img
                                 src={resource.logo}
                                 className={styles.logo}

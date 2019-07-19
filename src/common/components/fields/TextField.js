@@ -12,7 +12,6 @@ export default ({
         <Input
             label={label}
             margin='normal'
-            floatingLabelText={label}
             error={touched && !!error}
             variant='outlined'
             fullWidth={true}

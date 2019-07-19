@@ -1,6 +1,9 @@
 {
-  "name": "app",
-  "version": "0.1.0",
+  "name": "lazy-time",
+  "author": "Artem Yarylchenko <a.yarilchenko@gmail.com>",
+  "description": "Come to help to devs track their activity",
+  "version": "0.0.1",
+  "homepage": ".",
   "private": true,
   "main": "public/electron.js",
   "dependencies": {
@@ -9,10 +12,12 @@
     "@material-ui/styles": "^4.1.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.3.2",
+    "electron-is-dev": "^1.1.0",
     "es6-url-template": "^1.0.3",
     "history": "^4.7.2",
     "jss": "^9.8.7",
     "lodash-es": "^4.17.11",
+    "moment": "^2.24.0",
     "node-sass": "^4.9.3",
     "path-to-regexp": "^3.0.0",
     "prop-types": "^15.7.2",
@@ -33,7 +38,8 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.4.0",
-    "rxjs-compat": "^6.4.0"
+    "rxjs-compat": "^6.4.0",
+    "shortid": "^2.2.14"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
@@ -42,7 +48,6 @@
     "electron": "^3.0.2",
     "electron-builder": "^20.39.0",
     "electron-devtools-installer": "^2.2.4",
-    "electron-is-dev": "^1.0.1",
     "foreman": "^3.0.1",
     "version-bump-prompt": "^5.0.0",
     "wait-on": "^3.2.0"
@@ -51,12 +56,45 @@
     "start": "concurrently \"cross-env BROWSER=none yarn react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "preelectron-pack": "npm build",
+    "dist": "build"
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "build": {
+    "appId": "com.lazytime.app",
+    "extends": null,
+    "files": [
+      "*.js",
+      "build",
+      "node_modules",
+      "package.json",
+      {
+        "from": "build",
+        "to": "public",
+        "filter": [
+          "*.js"
+        ]
+      }
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  }
 }

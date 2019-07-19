@@ -18,14 +18,15 @@ const ajaxCall = ({ uuid, payload }) => {
         ...meta,
         // withCredentials: true,
         crossDomain: true,
+        createXHR: function () {
+            return new XMLHttpRequest();
+        },
         headers: {
             'Content-Type': 'application/json',
             ...headers
         },
         url: `${meta.url}${query}`
     };
-
-    console.log(settings);
 
     if (payload.body) {
         settings.body = JSON.stringify(payload.body);
